@@ -23,8 +23,8 @@ Users can view a list of flashcards, each showing a question and its correspondi
 
 ## Usage:
 
-Admin Interface: Access a dashboard where you can manage all flashcards through a series of forms and controls.
-User Interface: View flashcards in a list format, with options to flip and review.
+- Admin Interface: Access a dashboard where you can manage all flashcards through a series of forms and controls.
+- User Interface: View flashcards in a list format, with options to flip and review.
 
 ## Run Locally
 
