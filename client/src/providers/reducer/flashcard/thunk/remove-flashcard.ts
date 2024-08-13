@@ -5,6 +5,7 @@ const DeleteFlashcardThunk = createAsyncThunk('delete-flashcard-thunk', async (i
     try {
         const result = await FLASHCARD_API.delete(`/?id=${id}`);
         if (result) {
+            console.log(result)
             return result.data.msg;
         }
     }

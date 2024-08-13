@@ -21,6 +21,7 @@ export default function Header() {
                         <li className='btn bg-red-900' onClick={() => {
                             DELETE_SESSIONSTORAGE_VALUE('token')
                             set_status(GET_SESSIONSTORAGE_VALUE('token') === null)
+                            window.location.reload();
                         }}>
                             Logout
                         </li>

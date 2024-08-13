@@ -11,11 +11,12 @@ export default function CardPanel() {
     // @ts-ignore
     const flashcard_state = useSelector(state => state.FLASHCARD_REDUCER)
     const [searchParams] = useSearchParams();
-    const [content, setcontent] = useState<{ QUES: string, ANS: string }[]>([]);
+    const [content, setcontent] = useState<{ ID: string, QUES: string, ANS: string }[] | null>(null);
     const page = searchParams.get('page');
 
     const revalidate = async () => {
         let result;
+        setcontent(null)
         if (page) {
             // @ts-ignore
             result = await dispatch(GetFlashcardThunk(page)).unwrap();
@@ -29,7 +30,7 @@ export default function CardPanel() {
     }
 
     useEffect(() => {
-        // console.log()
+        // // console.log()
         if (!flashcard_state.content[page]) {
             revalidate()
         }
@@ -42,7 +43,19 @@ export default function CardPanel() {
             <div className='mt-2 grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-6' >
 
                 {
-                    content.map(ele => <Flashcard data={{ ques: ele.QUES, ans: ele.ANS }} revalidate={() => revalidate()} />)
+                    content === null ?
+                        <>
+                            <Flashcard data={null} revalidate={() => revalidate()} />
+                            <Flashcard data={null} revalidate={() => revalidate()} />
+                            <Flashcard data={null} revalidate={() => revalidate()} />
+                            <Flashcard data={null} revalidate={() => revalidate()} />
+                        </>
+                        :
+                        <>
+                            {
+                                content.map(ele => <Flashcard data={{ id: ele.ID, ques: ele.QUES, ans: ele.ANS }} revalidate={() => revalidate()} />)
+                            }
+                        </>
                 }
             </div >
             <div className='m-5 my-10 flex justify-between'>
@@ -56,7 +69,7 @@ export default function CardPanel() {
                 >Previous</button>
                 <button className='btn w-28 bg-slate-600' onClick={
                     () => {
-                        if (content.length === 10) {
+                        if (content && content.length === 10) {
                             navigate(`/?page=${page ? parseInt(page) + 1 : 2}`)
                         }
                     }}>Next</button>
